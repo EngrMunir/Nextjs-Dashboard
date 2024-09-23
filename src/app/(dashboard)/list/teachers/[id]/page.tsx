@@ -1,5 +1,6 @@
 import Announcements from "@/components/Announcements";
 import BigCalendar from "@/components/BigCalendar";
+import FormModal from "@/components/FormModal";
 import Performance from "@/components/Performance";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,22 @@ const SingleTeacherPage = () => {
                             <Image src="https://i.ibb.co.com/R0Hh0ff/prof.jpg" alt="" width={144} height={144} className="w-36 h-36 rounded-full object-cover"/>
                         </div>
                         <div className="w-2/3 flex flex-col justify-between gap-4">
+                        <div className="flex items-center gap-4">
                         <h1 className="text-xl font-semibold">Sirajul Munir</h1>
+                        <FormModal table="teacher" type="update" data={{
+                            id:1,
+                            username:"sirajul munir",
+                            email:"munir@gmail.com",
+                            firstName:"Sirajul",
+                            lastName:"Munir",
+                            phone:"+01831013421",
+                            address:"Pomra",
+                            bloodType:"A+",
+                            dateOfBirth:"1995-12-06",
+                            sex:"male",
+                            img:"https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&v=1200"
+                        }}/>
+                        </div>
                             <p className="text-sm text-gray-500">
                                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                             </p>

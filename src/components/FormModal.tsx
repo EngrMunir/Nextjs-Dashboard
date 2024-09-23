@@ -1,7 +1,32 @@
 "use client"
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
+// import TeacherForm from "./forms/TeacherForm";
+// import StudentForm from "./forms/StudentForm";
+
+const TeacherForm = dynamic(()=>import("./forms/TeacherForm"),{
+    loading:()=><h1>Loading.....</h1>
+})
+const StudentForm = dynamic(()=>import("./forms/StudentForm"),{
+    loading:()=><h1>Loading.....</h1>
+})
+const ParentForm = dynamic(()=>import("./forms/ParentForm"));
+const ClassForm = dynamic(()=>import("./forms/ClassForm"));
+const SubjectForm = dynamic(()=>import("./forms/SubjectForm"));
+const LessonForm = dynamic(()=>import("./forms/LessonForm"));
+const ExamForm = dynamic(()=>import("./forms/ExamForm"));
+const AssignmentForm = dynamic(()=>import("./forms/AssignmentForm"));
+const ResultForm = dynamic(()=>import("./forms/ResultForm"));
+const AttendanceForm = dynamic(()=>import("./forms/AttendanceForm"));
+const EventForm = dynamic(()=>import("./forms/EventForm"));
+const AnnouncementForm = dynamic(()=>import("./forms/AnnouncementForm"));
+
+const forms:{[key:string]:(type:"create" |"update",data?:any)=> JSX.Element}={
+    teacher:(type,data) => <TeacherForm type={type} data={data} />,
+    student:(type,data) => <StudentForm type={type} data={data} />,
+};
 
 const FormModal = ({table,type,data,id}:{
     table:"teacher"|"student"| "parent"|"subject"|"class"|"lesson"|"exam"|"assignment"|"result"|"attendance"|"event"|"announcement";
@@ -12,11 +37,16 @@ const FormModal = ({table,type,data,id}:{
     const size= type === "create"?"w-8 h-8":"w-7 h-7"
     const bgColor = type === "create"?"bg-lamaYellow":type==="update"?"bg-lamaSky":"bg-lamaPurple";
    const [open, setOpen] = useState(false);
+
    const Form = ()=>{
-    return type === "delete" && id? <form>
+    return type === "delete" && id? (<form>
         <span className="text-center font-medium">All data will be lost. Are you sure you want to delete this {table}?</span>
         <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
-    </form>:"create or update form"
+    </form>):type==="create"|| type==="update"?(
+        forms[table](type,data)
+    ):(
+        "Form not found!"
+    )
    }
     return (
         <>
